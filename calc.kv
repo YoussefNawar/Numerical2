@@ -3,30 +3,7 @@
         orientation: "vertical"
         size_hint: 1, 1
         BoxLayout:
-            size_hint: 1, 0.125
-            orientation: "horizontal"
-            spacing : 20
-            Label:
-                text: "f(x)"
-                size_hint_x: 0.1
-                size_hint_y: 1
-                pos_hint: {'Left': 1}
-
-            TextInput:
-                id : fxInputField
-                size_hint_x: 1
-                size_hint_y: 1
-                pos_hint: {'center': 1}
-            Button:
-                id: uploadBtn
-                text: "open"
-                pos_hint: {'right': 1}
-                size_hint_x: 0.3
-                size_hint_y: 1
-                on_release: root.upload()
-
-        BoxLayout:
-            size_hint: 1, 0.125
+            size_hint: 1, 0.1
             spacing : 20
             orientation: "horizontal"
             BoxLayout:
@@ -49,99 +26,72 @@
                         size : (18, 32)
                     TextInput:
                         id : precisionTextArea
-            BoxLayout:
-                size_hint_x: 0.265
+            Button:
+                id: uploadBtn
+                text: "Open"
+                pos_hint: {'right': 1}
+                size_hint_x: 0.26
+                size_hint_y: 1
+                on_release: root.upload()
+        BoxLayout:
+            size_hint: 0.2, 0.1
+            pos_hint: {'right': 1}
+            spacing : 20
+            orientation: "horizontal"
+            Button:
+                id: diffbtn
+                text: 'Gauss-Seidel'
+                pos_hint: {'right': 1}
+                on_parent: dropdown.dismiss()
+                on_release:
+                    if not root.state: dropdown.open(self); root.state = True
+                    else: dropdown.dismiss(); root.state = False
 
+            DropDown:
+                id: dropdown
+                on_select: diffbtn.text = '{}'.format(args[1]); root.state = False
+                size_hint_x: 0.5
+                pos_hint: {'right': 1}
                 Button:
-                    id: diffbtn
-                    text: 'Bisection'
-                    size_hint_x: 0.5
-                    pos_hint: {'right': 1}
-                    on_parent: dropdown.dismiss()
-                    on_release:
-                        if not root.state: dropdown.open(self); root.state = True
-                        else: dropdown.dismiss(); root.state = False
-
-                DropDown:
-                    id: dropdown
-                    on_select: diffbtn.text = '{}'.format(args[1]); root.state = False
-                    size_hint_x: 0.5
-                    pos_hint: {'right': 1}
-                    Button:
-                        text: 'Bisection'
-                        size_hint_y: None
-                        height: 35
-                        on_release: root.selection(self.text)
-
-                    Button:
-                        text: 'Regula falsi'
-                        size_hint_y: None
-                        height: 35
-                        on_release: root.selection(self.text)
-                    Button:
-                        text: 'Fixed point'
-                        size_hint_y: None
-                        height: 35
-                        on_release: root.selection(self.text)
-                    Button:
-                        text: 'Newton Raphhsen'
-                        size_hint_y: None
-                        height: 35
-                        on_release: root.selection(self.text)
-                    Button:
-                        text: 'Secant'
-                        size_hint_y: None
-                        height: 35
-                        on_release: root.selection(self.text)
-
+                    text: 'Gaussian-elimination'
+                    size_hint_y: None
+                    height: 35
+                    on_release: root.selection(self.text)
+                Button:
+                    text: 'LU decomposition'
+                    size_hint_y: None
+                    height: 35
+                    on_release: root.selection(self.text)
+                Button:
+                    text: 'Gaussian-Jordan'
+                    size_hint_y: None
+                    height: 35
+                    on_release: root.selection(self.text)
+                Button:
+                    text: 'Gauss-Seidel'
+                    size_hint_y: None
+                    height: 35
+                    on_release: root.selection(self.text)
         BoxLayout:
             orientation: "horizontal"
-            size_hint: 1, 0.125
-            spacing : 20
-            BoxLayout:
-                orientation: "horizontal"
-                BoxLayout:
-                    orientation: "horizontal"
-                    Label:
-                        id : x1
-                        text : "x1"
-                        size_hint_x: 0.5
-                    TextInput:
-                        id : x1TextArea
-                        size : (5,30)
-                BoxLayout:
-                    orientation: "horizontal"
-                    Label:
-                        id : x2
-                        text : "x2"
-                        size_hint_x: 0.5
-                    TextInput:
-                        id : x2TextArea
-                        size : (5,30)
-                Label:
-                    size_hint_x : 0.6
-
-        BoxLayout:
-            orientation: "horizontal"
-            size_hint: 1, 0.125
-            spacing : 20
+            size_hint: 1, 1
+            pos_hint: {'right': 1}
             Label:
-                id :gx
-                text : "g(x)"
+                text: "Equations"
                 size_hint_x: 0.1
             TextInput:
-                id : gxInputField
+                id : equationsTextArea
+                size_hint_x: 0.6
             Button:
-                pos_hint: {'right': 1}
-                size_hint_x: 0.3
+                pos_hint: {'center': 1}
+                size_hint: 0.2, 0.2
                 id: evaluatebtn
                 text: "evaluate"
-                on_release: root.evaluate(fxInputField.text, diffbtn.text, x1TextArea.text,x2TextArea.text, gxInputField.text, maxTextArea.text,precisionTextArea.text)
-
+                on_release: root.evaluate()
         BoxLayout:
             orientation: "horizontal"
-            size_hint: 1, 0.7
-            spacing : 20
+            size: self.parent.size  # important!
+            pos: self.parent.pos  # important!
             BoxLayout:
                 orientation: "horizontal"
                 Label:

@@ -1,21 +1,17 @@
 import os
 import json
 from kivy.app import App
-from kivy.core.window import Window
 from kivy.lang import Builder
-from kivy.properties import ObjectProperty, StringProperty
+from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
-from kivy.uix.scrollview import ScrollView
-
-import solutions
-from solutions import *
 
 # Set the app size
 # Window.size = (500, 700)
 # Window.clearcolor = (255/255, 255/255, 255/255, 1)
 # Designate Our .kv design file 
+
 Builder.load_file('calc.kv')
 
 
@@ -44,49 +40,30 @@ class CustomDropDown(BoxLayout):
         pass
 
     def selection(self, text):
-        if text == 'Bisection':
-            self.ids.x2.opacity = 1
-            self.ids.x2TextArea.opacity = 1
-            self.ids.gxInputField.opacity = 0
-            self.ids.gx.opacity = 0
-        elif text == 'Regula falsi':
-            self.ids.x2.opacity = 1
-            self.ids.x2TextArea.opacity = 1
-            self.ids.gxInputField.opacity = 0
-            self.ids.gx.opacity = 0
-        elif text == 'Fixed point':
-            self.ids.x2.opacity = 0
-            self.ids.x2TextArea.opacity = 0
-            self.ids.gxInputField.opacity = 1
-            self.ids.gx.opacity = 1
-        elif text == 'Newton Raphhsen':
-            self.ids.x2.opacity = 0
-            self.ids.x2TextArea.opacity = 0
-            self.ids.gxInputField.opacity = 0
-            self.ids.gx.opacity = 0
-        else:
-            self.ids.x2.opacity = 1
-            self.ids.x2TextArea.opacity = 1
-            self.ids.gxInputField.opacity = 0
-            self.ids.gx.opacity = 0
+        if text == 'Gaussian-elimination':
+            self.ids.maxIteration.opacity = 0
+            self.ids.maxTextArea.opacity = 0
+            self.ids.precision.opacity = 0
+            self.ids.precisionTextArea.opacity = 0
+        elif text == 'LU decomposition':
+            self.ids.maxIteration.opacity = 0
+            self.ids.maxTextArea.opacity = 0
+            self.ids.precision.opacity = 0
+            self.ids.precisionTextArea.opacity = 0
+        elif text == 'Gaussian-Jordan':
+            self.ids.maxIteration.opacity = 0
+            self.ids.maxTextArea.opacity = 0
+            self.ids.precision.opacity = 0
+            self.ids.precisionTextArea.opacity = 0
+        elif text == 'Gauss-Seidel':
+            self.ids.maxIteration.opacity = 1
+            self.ids.maxTextArea.opacity = 1
+            self.ids.precision.opacity = 1
+            self.ids.precisionTextArea.opacity = 1
         self.ids.dropdown.select(text)
 
-    def evaluate(self, inputText, selection, x1, x2, gx, maxIteration, precision):
-        if maxIteration == '':
-            maxIteration = 50
-        if precision == '':
-            precision = 0.00001
-        if selection == 'Bisection':
-            answers, x = solutions.bisection(inputText, float(x1), float(x2), float(precision), int(float(maxIteration)))
-        elif selection == 'Regula falsi':
-            answers, x = solutions.falsi(inputText, float(x1), float(x2), float(precision), int(float(maxIteration)))
-        elif selection == 'Fixed point':
-            answers, x = solutions.fixed(inputText, gx, float(x1), float(precision), int(float(maxIteration)))
-        elif selection == 'Newton Raphhsen':
-            answers, x = solutions.Newton(inputText, float(x1), float(precision), int(float(maxIteration)))
-        else:
-            answers, x = solutions.secant(inputText, float(x1), float(x2), float(precision), int(float(maxIteration)))
-        self.ids.answerField.text = str(answers) + str(x)
+    def evaluate(self):
+        print("rkgmepm")
 
     def upload(self):
         content = LoadDialog(load=self.load, cancel=self.dismiss_popup)
