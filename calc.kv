@@ -1,0 +1,174 @@
+<CustomDropDown>
+    BoxLayout:
+        orientation: "vertical"
+        size_hint: 1, 1
+        BoxLayout:
+            size_hint: 1, 0.125
+            orientation: "horizontal"
+            spacing : 20
+            Label:
+                text: "f(x)"
+                size_hint_x: 0.1
+                size_hint_y: 1
+                pos_hint: {'Left': 1}
+
+            TextInput:
+                id : fxInputField
+                size_hint_x: 1
+                size_hint_y: 1
+                pos_hint: {'center': 1}
+            Button:
+                id: uploadBtn
+                text: "open"
+                pos_hint: {'right': 1}
+                size_hint_x: 0.3
+                size_hint_y: 1
+                on_release: root.upload()
+
+        BoxLayout:
+            size_hint: 1, 0.125
+            spacing : 20
+            orientation: "horizontal"
+            BoxLayout:
+                size_hint : 1,1
+                orientation: "horizontal"
+                BoxLayout:
+                    orientation: "horizontal"
+                    Label:
+                        id : maxIteration
+                        text : "Max Iterations"
+                        size :(18, 32)
+                    TextInput:
+                        id : maxTextArea
+                        size_hint_x: 0.6
+                BoxLayout:
+                    orientation: "horizontal"
+                    Label:
+                        id : precision
+                        text : "precision"
+                        size : (18, 32)
+                    TextInput:
+                        id : precisionTextArea
+            BoxLayout:
+                size_hint_x: 0.265
+
+                Button:
+                    id: diffbtn
+                    text: 'Bisection'
+                    size_hint_x: 0.5
+                    pos_hint: {'right': 1}
+                    on_parent: dropdown.dismiss()
+                    on_release:
+                        if not root.state: dropdown.open(self); root.state = True
+                        else: dropdown.dismiss(); root.state = False
+
+                DropDown:
+                    id: dropdown
+                    on_select: diffbtn.text = '{}'.format(args[1]); root.state = False
+                    size_hint_x: 0.5
+                    pos_hint: {'right': 1}
+                    Button:
+                        text: 'Bisection'
+                        size_hint_y: None
+                        height: 35
+                        on_release: root.selection(self.text)
+
+                    Button:
+                        text: 'Regula falsi'
+                        size_hint_y: None
+                        height: 35
+                        on_release: root.selection(self.text)
+                    Button:
+                        text: 'Fixed point'
+                        size_hint_y: None
+                        height: 35
+                        on_release: root.selection(self.text)
+                    Button:
+                        text: 'Newton Raphhsen'
+                        size_hint_y: None
+                        height: 35
+                        on_release: root.selection(self.text)
+                    Button:
+                        text: 'Secant'
+                        size_hint_y: None
+                        height: 35
+                        on_release: root.selection(self.text)
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 0.125
+            spacing : 20
+            BoxLayout:
+                orientation: "horizontal"
+                BoxLayout:
+                    orientation: "horizontal"
+                    Label:
+                        id : x1
+                        text : "x1"
+                        size_hint_x: 0.5
+                    TextInput:
+                        id : x1TextArea
+                        size : (5,30)
+                BoxLayout:
+                    orientation: "horizontal"
+                    Label:
+                        id : x2
+                        text : "x2"
+                        size_hint_x: 0.5
+                    TextInput:
+                        id : x2TextArea
+                        size : (5,30)
+                Label:
+                    size_hint_x : 0.6
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 0.125
+            spacing : 20
+            Label:
+                id :gx
+                text : "g(x)"
+                size_hint_x: 0.1
+            TextInput:
+                id : gxInputField
+            Button:
+                pos_hint: {'right': 1}
+                size_hint_x: 0.3
+                id: evaluatebtn
+                text: "evaluate"
+                on_release: root.evaluate(fxInputField.text, diffbtn.text, x1TextArea.text,x2TextArea.text, gxInputField.text, maxTextArea.text,precisionTextArea.text)
+
+        BoxLayout:
+            orientation: "horizontal"
+            size_hint: 1, 0.7
+            spacing : 20
+            BoxLayout:
+                orientation: "horizontal"
+                Label:
+                    text: "answer"
+                    size_hint_x: 0.1
+                ScrollView:
+                    Label:
+                        id : answerField
+                        size_hint: None, None
+                        size: self.texture_size
+                        halign: 'left'
+                        valign: 'top'
+                        bold: True
+<LoadDialog>:
+    BoxLayout:
+        size: root.size
+        pos: root.pos
+        orientation: "vertical"
+        FileChooserListView:
+            id: filechooser
+            path: './'
+        BoxLayout:
+            size_hint_y: None
+            height: 30
+            Button:
+                text: "Cancel"
+                on_release: root.cancel()
+            Button:
+                text: "Load"
+                on_release: root.load(filechooser.path, filechooser.selection)
