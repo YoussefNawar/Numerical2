@@ -7,7 +7,8 @@ from kivy.properties import ObjectProperty
 from kivy.uix.boxlayout import BoxLayout
 from kivy.uix.floatlayout import FloatLayout
 from kivy.uix.popup import Popup
-
+import solutions
+from solutions import *
 # Set the app size
 # Window.size = (500, 700)
 # Window.clearcolor = (255/255, 255/255, 255/255, 1)
@@ -86,6 +87,18 @@ class CustomDropDown(BoxLayout):
         # we enta btda5l el equations mn 8er spaces we 7ot 1x law 3ayzo be 1
         # we 0x law 3ayzo be zero
         #TODO: check el method be if we we eb3to 3al method el sa7 zai el adeem
+        selection = self.ids.diffbtn.text
+        if selection == 'LU decomposition':
+            memo, uu, ll, bb, dd, xx = solutions.LU(matrix)
+
+            self.ids.answerField.text = memo + uu + ll + bb + dd + xx
+        elif selection == 'Gaussian-elimination':
+            a,x = solutions.gauss_elimination(matrix)
+            self.ids.answerField.text = a + x
+        else:
+            memo, memo_jordan, xx = solutions.jordan(matrix)
+            self.ids.answerField.text = memo + memo_jordan + xx 
+
         return
 
     def upload(self):
