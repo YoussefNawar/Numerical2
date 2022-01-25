@@ -43,7 +43,7 @@ def gauss_elimination(M):
         xs[i] = xs[i] / a[i][i]
         # print(M)
     print(xs)
-    return str(a), str(xs)
+    return str(a) + "\n", str(xs)
 
 
 m2 = [[1, 1, -1, -3], [6, 2, 2, 2], [-3, 4, 1, 1]]
