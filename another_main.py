@@ -75,18 +75,15 @@ class CustomDropDown(BoxLayout):
             for i in equation:
                 if (i[0] == '='):
                     str = i.split('=')
-                    equation2.append(int(str[1]))
+                    equation2.append(float(str[1]))
                 else:
-                    equation2.append(int(i))
+                    equation2.append(float(i))
 
            # print(equation2)
             matrix.append(equation2)
         # print(equationsList)
         print(matrix)
-        # El coeffs m3 el bs fi matrix da el eb3to lel functions btoo3k
-        # we enta btda5l el equations mn 8er spaces we 7ot 1x law 3ayzo be 1
-        # we 0x law 3ayzo be zero
-        #TODO: check el method be if we we eb3to 3al method el sa7 zai el adeem
+
         selection = self.ids.diffbtn.text
         if selection == 'LU decomposition':
             memo, uu, ll, bb, dd, xx = solutions.LU(matrix)
@@ -97,7 +94,7 @@ class CustomDropDown(BoxLayout):
             self.ids.answerField.text = a + x
         else:
             memo, memo_jordan, xx = solutions.jordan(matrix)
-            self.ids.answerField.text = memo + memo_jordan + xx 
+            self.ids.answerField.text = memo + memo_jordan + xx
 
         return
 

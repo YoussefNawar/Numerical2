@@ -72,7 +72,7 @@ def LU(M):
                 a[[i, k]] = a[[k, i]]
 
     #print(M)
-    memo = "pivoted matrix = " + str(a)
+    memo = "pivoted matrix = " + str(a) + "\n"
     print(memo)
     L = num.zeros((n,n))
 
@@ -104,11 +104,11 @@ def LU(M):
         xs[i] = xs[i] / U[i][i]
 
 
-    uu = "U = " + str(U)
-    ll ="L = " + str(L)
-    bb ="b = " +  str(b)
-    dd = "d = " + str(d)
-    xx = "x-values: " + str(xs)
+    uu = "U = " + str(U) + "\n"
+    ll ="L = " + str(L) + "\n"
+    bb ="b = " +  str(b) + "\n"
+    dd = "d = " + str(d) + "\n"
+    xx = "x-values: " + str(xs) + "\n"
     print(uu)
     print(ll)
     print(bb)
@@ -136,8 +136,8 @@ def jordan(M):
         for k in range(i + 1, n):
             if num.fabs(a[k][0]) > num.fabs(a[i][0]):
                 a[[i, k]] = a[[k, i]]
-    memo = "pivoted matrix = " + str(a)
-    print(memo)
+    memo = "pivoted matrix = " + str(a) + "\n"
+    print(memo + "\n")
     for i in range(n):
         if a[i][i] == 0.0:
             print("divide by zero error")
@@ -152,12 +152,12 @@ def jordan(M):
 
                 for k in range(n + 1):
                     a[j][k] = a[j][k] - m1 * a[i][k]
-    memo_jordan = "matrix after gauss jordan: " + str(a)
-    print(memo_jordan)
+    memo_jordan = "matrix after gauss jordan: " + str(a) + "\n"
+    print(memo_jordan + "\n")
     for i in range(n):
         xs[i] = a[i][n] / a[i][i]
-    xx = "x-values : " + str(xs)
-    print(xx)
+    xx = "x-values : " + str(xs) + "\n"
+    print(xx + "\n")
     return memo,memo_jordan,xx
 
 #jordan(m2)
