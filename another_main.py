@@ -112,14 +112,33 @@ class CustomDropDown(BoxLayout):
             f = open(filename[0])
             data = json.load(f)
             print(data)
-            fx = data.get('f(x)')
-            Selection = data.get("Selection")
-            x1 = data.get("x1")
-            x2 = data.get("x2")
-            gx = data.get("g(x)")
-            maxIteration = data.get("MaxIteration")
-            precision = data.get("precision")
-            self.evaluate(fx, Selection, x1, x2, gx, maxIteration, precision)
+            equations = data.get('equations')
+            equationsList = equations.split("\n")
+            matrix = []
+            for eqn in equationsList:
+                equation = re.findall(r'[\d\.\-\+]+', eqn)
+                equation2 = []
+                for i in equation:
+                    if (i[0] == '='):
+                        str = i.split('=')
+                        equation2.append(float(str[1]))
+                    else:
+                        equation2.append(float(i))
+
+                # print(equation2)
+                matrix.append(equation2)
+            # print(equationsList)
+            print(matrix)
+            selection = data.get("Selection")
+            if selection == 'LU decomposition':
+                memo, uu, ll, bb, dd, xx = solutions.LU(matrix)
+                self.ids.answerField.text = memo + uu + ll + bb + dd + xx
+            elif selection == 'Gaussian-elimination':
+                a, x = solutions.gauss_elimination(matrix)
+                self.ids.answerField.text = a + x
+            else:
+                memo, memo_jordan, xx = solutions.jordan(matrix)
+                self.ids.answerField.text = memo + memo_jordan + xx
         self.dismiss_popup()
 
     def cancel(self):
